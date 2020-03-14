@@ -1,0 +1,5 @@
+package com.capgemini.librarymanagementjdbc.dto;
+
+public class BookBean {
+
+}

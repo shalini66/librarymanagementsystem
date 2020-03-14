@@ -1,0 +1,262 @@
+package com.capgemini.librarymanagementsystemjdbc.dao;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.StudentBean;
+import com.capgemini.librarymanagementsystemjdbc.exception.AdminException;
+
+public class StudentDAOImp implements StudentDAO{
+
+	@Override
+	public boolean register(StudentBean info) {
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "insert into book values (?,?,?,?,?)";
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setString(1, info.getSname());
+					pstmt.setInt(2, info.getSid());
+					pstmt.setLong(3, info.getMobile());
+					pstmt.setString(4, info.getSemail());
+					pstmt.setString(5, info.getPassword());
+					int count = pstmt.executeUpdate();
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public StudentBean auth(String email, String password) {
+		StudentBean bean = new StudentBean(); 
+		try(FileInputStream fin = new FileInputStream("dburl.properties")){
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select email,password from admin where email=? and password=?";
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					//<AdminBean> bean2 = new LinkedList<AdminBean>(); 
+					pstmt.setString(1, email);
+					pstmt.setString(2, password); 
+
+					ResultSet rs = pstmt.executeQuery();
+					if(rs.next()) {
+						if(bean.getSemail().equals(email) && bean.getPassword().equals(password)/*bean2.contains(email.equals(email)) && password.equals(password)*//*bean.getEmail().equals(email)&&bean.getPassword().equals(password)*//*bean2.contains(bean.getEmail().equals(email)&&bean.getPassword().equals(password))*/){
+							System.out.println("login successful");
+							return bean;
+						}
+					}
+					throw new AdminException("invalid email and password");	
+				} 
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	public BookBean searchBookTitle(String bname) {
+		BookBean bean = new BookBean();
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select * from book where bname=?";
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setString(1, bname);
+					ResultSet rs = pstmt.executeQuery();
+					if(rs.next()) {	
+						bean.setBid(rs.getInt("bid"));
+						bean.setBname(rs.getString("bname"));
+						bean.setAuthor(rs.getString("author"));
+						bean.setCategory(rs.getString("category"));
+						bean.setPublishername(rs.getString("publishername"));
+						return bean;
+					} else {
+						System.out.println("book not found");
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	@Override
+	public BookBean searchBookAuthor(String bAuthor) {
+		BookBean bean = new BookBean();
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select * from book where author=?";
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setString(1, bAuthor);
+					ResultSet rs = pstmt.executeQuery();
+					if(rs.next()) {	
+						bean.setBid(rs.getInt("bid"));
+						bean.setBname(rs.getString("bname"));
+						bean.setAuthor(rs.getString("author"));
+						bean.setCategory(rs.getString("category"));
+						bean.setPublishername(rs.getString("publishername"));
+						return bean;
+					} else {
+						System.out.println("book not found");
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public BookBean searchBookType(int bookType) {
+		BookBean bean = new BookBean();
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select * from book where bid=?";
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setInt(1, bookType);
+					ResultSet rs = pstmt.executeQuery();
+					if(rs.next()) {	
+						bean.setBid(rs.getInt("bid"));
+						bean.setBname(rs.getString("bname"));
+						bean.setAuthor(rs.getString("author"));
+						bean.setCategory(rs.getString("category"));
+						bean.setPublishername(rs.getString("publishername"));
+						return bean;
+					} else {
+						System.out.println("book not found");
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public int getBookIds() {
+		BookBean bean = new BookBean();
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select bid from book";
+				try(Statement stmt = conn.createStatement()){
+					ResultSet rs = stmt.executeQuery(query);
+					if(rs.next()) {	
+						bean.setBid(rs.getInt("bid"));
+					} else {
+						System.out.println("book not found");
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public List<BookBean> getBooksInfo() {
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			//Class.forName(pro.getProperty("path")).newInstance();
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			String dburl="jdbc:mysql://localhost:3306/library_management_system?user=root&password=root";
+			try(Connection conn = DriverManager.getConnection(dburl)){
+				String query = "select * from book";
+				try(Statement stmt = conn.createStatement()){
+					List<BookBean> li  = new LinkedList<BookBean>();
+					ResultSet rs = stmt.executeQuery(query);
+					while(rs.next()) {	
+						BookBean bean = new BookBean();
+						bean.setBid(rs.getInt("bid"));
+						bean.setBname(rs.getString("bname"));
+						bean.setAuthor(rs.getString("author"));
+						bean.setCategory(rs.getString("category"));
+						bean.setPublishername(rs.getString("publishername"));
+						li.add(bean);
+					}
+					return li;
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public boolean requestBook(int bid, String author) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean returnBook(int bid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

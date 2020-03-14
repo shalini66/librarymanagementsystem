@@ -1,0 +1,5 @@
+package com.capgemini.librarymanagementjdbc.dummy;
+
+public class Dummy2 {
+
+}

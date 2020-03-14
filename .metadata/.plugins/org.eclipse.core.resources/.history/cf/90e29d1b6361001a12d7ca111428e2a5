@@ -1,0 +1,17 @@
+package com.capgemini.librarymanagementjdbc.dummy;
+
+import java.util.Scanner;
+
+import com.capgemini.librarymanagementjdbc.dao.AdminDAO;
+import com.capgemini.librarymanagementjdbc.dao.AdminDAOImp;
+import com.capgemini.librarymanagementjdbc.dto.AdminBean;
+import com.capgemini.librarymanagementjdbc.factory.AdminFactory;
+import com.capgemini.librarymanagementjdbc.service.AdminService;
+
+public class Dummy {
+	public static void main(String[] args) {
+		public static void doReg {
+			return null;
+		}
+	}
+}

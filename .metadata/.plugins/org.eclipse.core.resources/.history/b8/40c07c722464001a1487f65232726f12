@@ -1,0 +1,10 @@
+package com.capgemini.librarymanagementsystemjdbc.dto;
+
+public class UsersBean {
+	private int id;
+	private String name;
+	private long mobile;
+	private String email;
+	private String password;
+	private String role;
+}

@@ -1,0 +1,5 @@
+package com.capgemini.librarymanagementjdbc.factory;
+
+public class AdminFactory {
+
+}

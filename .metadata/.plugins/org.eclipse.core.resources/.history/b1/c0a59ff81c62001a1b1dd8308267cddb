@@ -1,0 +1,5 @@
+package com.capgemini.librarymanagementsystemjdbc.exception;
+
+public class AdminException {
+
+}

@@ -1,0 +1,5 @@
+package com.capgemini.librarymanagementsystemjdbc.dao;
+
+public interface UsersDAO {
+
+}
