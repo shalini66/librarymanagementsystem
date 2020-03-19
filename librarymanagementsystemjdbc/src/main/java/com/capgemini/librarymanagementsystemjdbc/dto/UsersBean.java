@@ -7,15 +7,6 @@ public class UsersBean {
 	private String email;
 	private String password;
 	private String role;
-	public UsersBean() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public UsersBean(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
-
 
 	public int getId() {
 		return id;

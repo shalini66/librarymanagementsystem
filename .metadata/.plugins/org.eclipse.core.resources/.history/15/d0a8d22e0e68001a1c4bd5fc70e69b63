@@ -1,0 +1,21 @@
+package com.capgemini.librarymanagementsystemjdbc.controller;
+
+import java.util.Scanner;
+
+import com.capgemini.librarymanagementsystemjdbc.factory.AdminFactory;
+import com.capgemini.librarymanagementsystemjdbc.service.AdminService;
+
+public class Test4 {
+	public static void main(String[] args) {
+		doMethods();
+	}
+	
+	public static void doMethods() {
+		Scanner scanner = new Scanner(System.in);
+		AdminService service = AdminFactory.getAdminService();
+		do {
+			
+		} while(true);
+		
+	}
+}

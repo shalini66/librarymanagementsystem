@@ -1,13 +1,17 @@
 package com.capgemini.librarymanagement.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BookBean {
+public class BookBean implements Serializable {
 	private String name;
 	private int id;
 	private String author;
 	private String category;
 	private String publishername;
+	private String issuedate;
+	private String  returndate;
+	
 	
 	public int getTotalBookAllowed() {
 		return totalBookAllowed;
@@ -68,5 +72,18 @@ public class BookBean {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+	public String getIssuedate() {
+		return issuedate;
+	}
+	public void setIssuedate(String issuedate) {
+		this.issuedate = issuedate;
+	}
+	public String getReturndate() {
+		return returndate;
+	}
+	public void setReturndate(String returndate) {
+		this.returndate = returndate;
+	}
+
 
 }

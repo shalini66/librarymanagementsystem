@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.capgemini.librarymanagement.dao.StudentDAO;
 import com.capgemini.librarymanagement.dto.BookBean;
+import com.capgemini.librarymanagement.dto.RequestBean;
 import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.factory.StudentFactory;
 
@@ -38,13 +39,13 @@ public class StudentServiceImp implements StudentService {
 		return dao.getBooksInfo();                                                                                      
 	}
 
-	public boolean requestBook(int bid, String author) {
+	public RequestBean bookRequest(StudentBean student, BookBean book) {
 		
-		return dao.requestBook(bid, author);
+		return dao.bookRequest(student, book);
 	}
 
-	public boolean returnBook(int bid) {
+	public RequestBean bookReturn(StudentBean student, BookBean book) {
 		
-		return dao.returnBook(bid);
+		return dao.bookReturn(student, book);
 	}                                     
 }

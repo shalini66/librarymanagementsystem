@@ -1,5 +1,0 @@
-package com.capgemini.librarymanagementsystemjdbc.exception;
-
-public class BookException {
-
-}

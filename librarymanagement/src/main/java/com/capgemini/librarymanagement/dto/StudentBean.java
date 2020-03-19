@@ -1,11 +1,17 @@
 package com.capgemini.librarymanagement.dto;
 
+import java.util.Date;
+
 public class StudentBean {
 	private String name;
-	private String id;
-	private long mobile;
+	private int id;
 	private String email;
 	private String password;
+	private String sdepartment;
+	private String phone;
+	private Date issueDate;
+	private Date returnDate;
+	private int booksBorrowed;
 	
 	public String getName() {
 		return name;
@@ -13,17 +19,11 @@ public class StudentBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
-	}
-	public long getMobile() {
-		return mobile;
-	}
-	public void setMobile(long mobile) {
-		this.mobile = mobile;
 	}
 	public String getEmail() {
 		return email;
@@ -36,6 +36,35 @@ public class StudentBean {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getSdepartment() {
+		return sdepartment;
+	}
+	public void setSdepartment(String sdepartment) {
+		this.sdepartment = sdepartment;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Date getIssueDate() {
+		return issueDate;
+	}
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+	public Date getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+	public int getBooksBorrowed() {
+		return booksBorrowed;
+	}
+	public void setBooksBorrowed(int booksBorrowed) {
+		this.booksBorrowed = booksBorrowed;
 	}		
-
 }

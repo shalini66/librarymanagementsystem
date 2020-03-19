@@ -1,0 +1,16 @@
+package com.capgemini.librarymanagementsystemjdbc.dto;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.UsersBean;;
+
+public class RequestBean implements Serializable{
+	private BookBean bookInfo;
+	private UsersBean usersInfo;
+	private boolean isIssued;
+	private boolean isReturned;
+	private LocalDate issuedDate;
+	private LocalDate returnedDate;
+}

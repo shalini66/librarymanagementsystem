@@ -1,10 +1,13 @@
 package com.capgemini.librarymanagement.dao;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import com.capgemini.librarymanagement.database.DataBase;
 import com.capgemini.librarymanagement.dto.AdminBean;
 import com.capgemini.librarymanagement.dto.BookBean;
+import com.capgemini.librarymanagement.dto.RequestBean;
+import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.exception.AdminException;
 
 public class AdminDAOImp implements AdminDAO {
@@ -100,16 +103,15 @@ public class AdminDAOImp implements AdminDAO {
 
 	}
 
-	public LinkedList<BookBean> searchBookType(int bookType) {
+	public LinkedList<BookBean> searchBookType(String bookType) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
-			int retrievedBookType=retrievedBook.getId();
-			if(bookType==retrievedBookType)
+			String retrievedBookType=retrievedBook.getCategory();
+			if(bookType.equals(retrievedBookType))
 			{
 				searchList.add(retrievedBook);	
-				return searchList;
 			}
 		}
 		if(searchList.size()==0)
@@ -119,7 +121,7 @@ public class AdminDAOImp implements AdminDAO {
 		else
 		{
 			return searchList;
-		}		
+		}			
 	}
 
 	public int updateBook(int bid) {
@@ -135,8 +137,6 @@ public class AdminDAOImp implements AdminDAO {
 			}
 		}
 		throw new AdminException("Book not updated");
-
-
 	}
 
 	public boolean removeBook(int bid) {
@@ -183,7 +183,128 @@ public class AdminDAOImp implements AdminDAO {
 		return false;
 	}
 
+	public List<StudentBean> showUsers() {
+		List<StudentBean> usersList = new LinkedList<StudentBean>();
+		for (StudentBean studentBean : DataBase.student) {
+
+			studentBean.getId();
+			studentBean.getName();
+			studentBean.getEmail();
+			studentBean.getBooksBorrowed();
+			usersList.add(studentBean);
+
+		}
+		return usersList;
+	}
+
+	public List<RequestBean> showRequests() {
+		List<RequestBean> infos = new LinkedList<RequestBean>();
+		for (RequestBean requestInfo : DataBase.request) {
+			requestInfo.getBookInfo();
+			requestInfo.getStudentInfo();
+			requestInfo.isIssued();
+			requestInfo.isReturned();
+			infos.add(requestInfo);
+		}
+		return infos;
+	}
+
+	public boolean bookIssue(StudentBean student, BookBean book) {
+		boolean isValid = false;
+
+		RequestBean requestInfo = new RequestBean();
+
+		int noOfBooksBorrowed = student.getBooksBorrowed();
+		for (RequestBean info : DataBase.request) {
+			if (info.getStudentInfo().getId() == student.getId()) {
+				if (info.getBookInfo().getId() == book.getId()) {
+					requestInfo = info;
+
+					isValid = true;
+
+				}
+			}
+		}
+
+		if (isValid)
+
+		{
 
 
+			for (BookBean info2 : DataBase.book) {
+				if (info2.getId() == book.getId()) {
+					book = info2;
+				}
+
+			}
+
+			for (StudentBean studentInfo : DataBase.student) {
+				if (studentInfo.getId() == student.getId()) {
+					student = studentInfo;
+					noOfBooksBorrowed = student.getBooksBorrowed();
+
+				}
+
+			}
+
+			if (noOfBooksBorrowed < 3) {
+
+				boolean isRemoved = DataBase.book.remove(book);
+				if (isRemoved) {
+
+					noOfBooksBorrowed++;
+					System.out.println(noOfBooksBorrowed);
+					student.setBooksBorrowed(noOfBooksBorrowed);
+					// DataBase.REQUESTDB.remove(requestInfo);
+					requestInfo.setIssued(true);
+					return true;
+				} else {
+					throw new AdminException("Book can't be borrowed");
+				}
+
+			} else {
+				throw new AdminException("Student Exceeds maximum limit");
+			}
+
+		} else {
+			throw new AdminException("Book data or Student data is incorrect");
+
+		}
+	}
+
+	public boolean isBookReceived(StudentBean student, BookBean book) {
+		boolean isValid = false;
+		RequestBean requestInfo1 = new RequestBean();
+		for (RequestBean requestInfo : DataBase.request) {
+
+			if (requestInfo.getBookInfo().getId() == book.getId()
+					&& requestInfo.getStudentInfo().getId() == student.getId() 
+					&& requestInfo.isReturned() == true) {
+				isValid = true;
+				requestInfo1 = requestInfo;
+			}
+		}
+		if (isValid) {
+
+			book.setAuthor(requestInfo1.getBookInfo().getAuthor());
+			book.setName(requestInfo1.getBookInfo().getName());
+			DataBase.book.add(book);
+			DataBase.request.remove(requestInfo1);
+
+
+			for (StudentBean userInfo2 : DataBase.student) {
+				if (userInfo2.getId() == student.getId()) {
+					student = userInfo2;
+				}
+
+			}
+			int noOfBooksBorrowed = student.getBooksBorrowed();
+			noOfBooksBorrowed--;
+			student.setBooksBorrowed(noOfBooksBorrowed);
+			return true;
+		}
+
+		return false;
+	}
 }	
 

@@ -1,5 +1,0 @@
-package com.capgemini.librarymanagementjdbc.service;
-
-public interface AdminService {
-
-}

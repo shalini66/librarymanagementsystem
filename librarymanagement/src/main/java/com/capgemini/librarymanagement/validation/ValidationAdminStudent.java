@@ -7,7 +7,7 @@ import com.capgemini.librarymanagement.exception.ValidationException;
 
 public class ValidationAdminStudent {
 	public boolean validatedId(int id) throws ValidationException {
-		String idRegEx = "[0-9]{1}[0-9]{5}" ;
+		String idRegEx = "[1-9]{1}[0-9]{5}" ;
 		boolean result = false;
 		if (Pattern.matches(idRegEx, String.valueOf(id))) {
 			result = true;
@@ -24,20 +24,20 @@ public class ValidationAdminStudent {
 		if (matcher.matches()) {
 			result = true;
 		} else {
-			throw new ValidationException("Name should  contains only Alpabates");
+			throw new ValidationException("Name should  contains only Alphabates");
 		}
 		return result;
 	}
 
 	public boolean validatedMobile(String mobile) throws ValidationException {
-		String mobileRegEx = "(0/91)?[4-9][0-9]{9}" ;
+		String mobileRegEx = "(0/91)?[6-9][0-9]{9}" ;
 		boolean result = false;
 		Pattern pattern = Pattern.compile(mobileRegEx);
 		Matcher matcher = pattern.matcher(mobile);
 		if (matcher.matches()) {
 			result = true;
 		} else {
-			throw new ValidationException("Mobile Number  will start between  4 & 9 and It should contains 10 numbers ");
+			throw new ValidationException("Mobile Number  will start with  6 or 9 and It should contains 10 numbers ");
 		}
 		return result;
 	}
@@ -63,6 +63,29 @@ public class ValidationAdminStudent {
 			throw new ValidationException("Password should contain atleast 8 characters ,one uppercase,one lowercase,one symbol "); 
 		}
 
+		return result;
+	}
+
+	public  boolean validatedDate(String date) throws ValidationException {
+		String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$"; 
+		boolean result = false;
+		Pattern pattern = Pattern.compile(regex); 
+		Matcher matcher = pattern.matcher((CharSequence)date); 
+		if(matcher.matches()) {
+			result = true;
+		} else {
+			throw new ValidationException("Enter proper Date Format");
+		}
+		return result;
+	}
+	public boolean validatedBookId(int id) throws ValidationException {
+		String idRegEx = "[1-9]{1}[0-9]{3}" ;
+		boolean result = false;
+		if (Pattern.matches(idRegEx, String.valueOf(id))) {
+			result = true;
+		} else {
+			throw new ValidationException("Id should contains exactly 4  digits");
+		}
 		return result;
 	}
 }

@@ -3,6 +3,7 @@ package com.capgemini.librarymanagement.dao;
 import java.util.LinkedList;
 import com.capgemini.librarymanagement.database.DataBase;
 import com.capgemini.librarymanagement.dto.BookBean;
+import com.capgemini.librarymanagement.dto.RequestBean;
 import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.exception.AdminException;
 import com.capgemini.librarymanagement.exception.StudentException;
@@ -113,27 +114,64 @@ public class StudentDAOImp implements StudentDAO {
 		return DataBase.book;
 	}
 
-	public boolean requestBook(int bid, String author) {
-		for(BookBean bean : DataBase.book) {
-			if(bean.getId()==bid && bean.getAuthor()==author) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false;
+
+	public RequestBean bookRequest(StudentBean student, BookBean book) {
+		boolean flag = false, 
+				isRequestExists = false;
+				RequestBean requestInfo = new RequestBean();
+				StudentBean userInfo2 = new StudentBean();
+				BookBean bookInfo2 = new BookBean();
+
+				for (RequestBean requestInfo2 : DataBase.request) {
+					if (book.getId() == requestInfo2.getBookInfo().getId()) {
+						isRequestExists = true;
+
+					}
+
+				}
+
+				if (!isRequestExists) {
+					for (StudentBean user : DataBase.student) {
+						if (user.getId() == student.getId()) {
+							for (BookBean book1 : DataBase.book) {
+								if (book1.getId() == book1.getId()) {
+									userInfo2 = user;
+									bookInfo2 = book1;
+									flag = true;
+								}
+							}
+						}
+					}
+					if (flag == true) {
+						requestInfo.setBookInfo(bookInfo2);
+						requestInfo.setStudentInfo(userInfo2);
+						DataBase.request.add(requestInfo);
+						return requestInfo;
+					}
+
+				}
+
+				throw new AdminException("Invalid request or you cannot request that book");
 	}
 
-	public boolean returnBook(int bid) {
-		for(BookBean bean : DataBase.book) {
-			if(bean.getId()==bid) {
-				DataBase.book.add(bid, bean);
-				return true;
-			} else {
-				return false;
+	public RequestBean bookReturn(StudentBean student, BookBean book) {
+		for (RequestBean requestInfo : DataBase.request) {
+
+			if (requestInfo.getBookInfo().getId() == book.getId() &&
+					requestInfo.getStudentInfo().getId() == student.getId() &&
+					requestInfo.isIssued() == true) {
+
+
+				System.out.println("Returning Issued book only");
+				requestInfo.setReturned(true);
+
+
+				return requestInfo;
 			}
+
 		}
-		return false;
+
+		throw new  AdminException("Invalid return ");
 	}
 
 }

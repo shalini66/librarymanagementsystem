@@ -1,6 +1,8 @@
 package com.capgemini.librarymanagement.dto;
 
-public class AdminBean {
+import java.io.Serializable;
+
+public class AdminBean implements Serializable{
 	private String aname;
 	private int aid;
 	private long mobile;

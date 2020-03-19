@@ -1,5 +1,0 @@
-package com.capgemini.librarymanagementjdbc.dao;
-
-public class StudentDAOImp {
-
-}

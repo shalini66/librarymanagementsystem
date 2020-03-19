@@ -6,6 +6,8 @@ import java.util.List;
 import com.capgemini.librarymanagement.dao.AdminDAO;
 import com.capgemini.librarymanagement.dto.AdminBean;
 import com.capgemini.librarymanagement.dto.BookBean;
+import com.capgemini.librarymanagement.dto.RequestBean;
+import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.factory.AdminFactory;
 
 public class AdminServiceImp implements AdminService{
@@ -32,7 +34,7 @@ public class AdminServiceImp implements AdminService{
 		return dao.searchBookAuthor(bAuthor);
 	}
 
-	public LinkedList<BookBean> searchBookType(int bookType) {
+	public LinkedList<BookBean> searchBookType(String bookType) {
 		return dao.searchBookType(bookType);
 	}
 
@@ -55,8 +57,23 @@ public class AdminServiceImp implements AdminService{
 		return dao.getBooksInfo();
 	}
 
-	public boolean issueBook(int bid) {
+	public List<StudentBean> showUsers() {
 		
-		return dao.issueBook(bid);
+		return dao.showUsers();
+	}
+
+	public List<RequestBean> showRequests() {
+		
+		return dao.showRequests();
+	}
+
+	public boolean bookIssue(StudentBean student, BookBean book) {
+		
+		return dao.bookIssue(student, book);
+	}
+
+	public boolean isBookReceived(StudentBean student, BookBean book) {
+		
+		return dao.isBookReceived(student, book);
 	}
 }

@@ -5,76 +5,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import com.capgemini.librarymanagementsystemjdbc.exception.AdminException;
-import com.capgemini.librarymanagementsystemjdbc.dto.AdminBean;
 import com.capgemini.librarymanagementsystemjdbc.dto.BookBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.RequestBean;
+import com.capgemini.librarymanagementsystemjdbc.dto.UsersBean;
 
 public class AdminDAOImp implements AdminDAO{
-
-//	@Override
-//	public boolean register(AdminBean info) {
-//		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
-//
-//			Properties pro = new Properties();
-//			pro.load(fin);
-//
-//			Class.forName(pro.getProperty("path")).newInstance();
-//			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
-//				String query = pro.getProperty("register_admin");
-//				try(PreparedStatement pstmt = conn.prepareStatement(query)){
-//					pstmt.setString(1, info.getAname());
-//					pstmt.setInt(2, info.getAid());
-//					pstmt.setLong(3, info.getMobile());
-//					pstmt.setString(4, info.getEmail());
-//					pstmt.setString(5, info.getPassword());
-//					int count = pstmt.executeUpdate();
-//				}
-//			}
-//
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return false;
-//
-//	}
-
-//	@Override
-//	public AdminBean auth(String email, String password) {
-//		AdminBean bean = new AdminBean();
-//
-//		try(FileInputStream fin = new FileInputStream("dburl.properties")){
-//			Properties pro = new Properties();
-//			pro.load(fin);
-//
-//			Class.forName(pro.getProperty("path")).newInstance();
-//			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
-//				String query = pro.getProperty("auth_admin");
-//				try(PreparedStatement pstmt = conn.prepareStatement(query)){ 
-//					pstmt.setString(1, email);
-//					pstmt.setString(2, password); 
-//
-//					ResultSet rs = pstmt.executeQuery();
-//					
-//					if(rs.next()) {
-//						if(rs.equals(bean.getEmail().equals(email)&&bean.getPassword().equals(password))/*bean2.contains(email.equals(email)) && password.equals(password)*//*bean.getEmail().equals(email)&&bean.getPassword().equals(password)*//*bean2.contains(bean.getEmail().equals(email)&&bean.getPassword().equals(password))*/){
-//							System.out.println("login successful");
-//							return bean;
-//						}
-//					}
-//					throw new AdminException("invalid email and password");	
-//				} 
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return bean;
-//	}
 
 	@Override
 	public boolean addBook(BookBean book) {
@@ -201,7 +140,6 @@ public class AdminDAOImp implements AdminDAO{
 		return null;
 	}
 
-	@Override
 	public boolean updateBook(BookBean bean) {
 
 		try(FileInputStream fin = new FileInputStream("dburl.properties")){
@@ -234,24 +172,107 @@ public class AdminDAOImp implements AdminDAO{
 
 	@Override
 	public boolean removeBook(int bid) {
-		// TODO Auto-generated method stub
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			Class.forName(pro.getProperty("path")).newInstance();
+			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
+				String query = pro.getProperty("delete");
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					pstmt.setInt(1, bid);
+					int rs = pstmt.executeUpdate();
+
+					if (rs != 0) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 
 	@Override
 	public LinkedList<Integer> getBookIds() {
-		// TODO Auto-generated method stub
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			Class.forName(pro.getProperty("path")).newInstance();
+			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
+				String query = pro.getProperty("get_bookIds");
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					ResultSet set = pstmt.executeQuery();
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public LinkedList<BookBean> getBooksInfo() {
-		// TODO Auto-generated method stub
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			Class.forName(pro.getProperty("path")).newInstance();
+			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
+				String query = pro.getProperty("get_allBook");
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					ResultSet set = pstmt.executeQuery();
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public boolean issueBook(int bid) {
+	public List<UsersBean> showUsers() {
+		try(FileInputStream	fin = new FileInputStream("dburl.properties")){
+
+			Properties pro = new Properties();
+			pro.load(fin);
+
+			Class.forName(pro.getProperty("path")).newInstance();
+			try(Connection conn = DriverManager.getConnection(pro.getProperty("dburl"), pro)){
+				String query = pro.getProperty("get_allUserInfo");
+				try(PreparedStatement pstmt = conn.prepareStatement(query)){
+					ResultSet set = pstmt.executeQuery();
+				}
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<RequestBean> showRequests() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean bookIssue(UsersBean student, BookBean book) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isBookReceived(UsersBean student, BookBean book) {
 		// TODO Auto-generated method stub
 		return false;
 	}
