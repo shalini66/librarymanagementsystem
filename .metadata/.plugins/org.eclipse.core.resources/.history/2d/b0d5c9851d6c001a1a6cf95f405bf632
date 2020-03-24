@@ -1,0 +1,20 @@
+package com.capgemini.librarymangemtsystemhibernate.dto;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Book")
+public class BookBean {
+	@Column
+	private String bname;
+	@Column
+	private int bid;
+	@Column
+	private String author;
+	@Column
+	private String category;
+	@Column
+	private String publishername;
+}

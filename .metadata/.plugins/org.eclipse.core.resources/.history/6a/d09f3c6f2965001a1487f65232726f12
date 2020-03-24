@@ -1,0 +1,16 @@
+user=root
+password=root
+dburl=jdbc:mysql://localhost:3306/library_management_system
+path=com.mysql.jdbc.Driver
+register_admin=insert into admin values(?,?,?,?,?);
+auth_admin=select email,password from admin where email=? and password=?;
+register_student=insert into student values(?,?,?,?,?);
+auth_student=select email,password from student where email=? and password=?;
+add_book=insert into book values (?,?,?,?,?);
+search_book_name=select * from book where bname=?;
+search_book_author=select * from book where author=?;
+search_book_id=select * from book where bid=?;
+get_bookId=select bid from book;
+get_allBook=select * from book;
+register=insert into users values(?,?,?,?,?,?)
+auth=select * from users where email=? and password=?;

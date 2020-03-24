@@ -1,0 +1,5 @@
+package com.capgemini.librarymangemtsystemhibernate.service;
+
+public interface UsersService {
+
+}

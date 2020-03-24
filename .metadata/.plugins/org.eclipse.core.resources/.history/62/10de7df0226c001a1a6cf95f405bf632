@@ -1,0 +1,5 @@
+package com.capgemini.librarymangemtsystemhibernate.dto;
+
+public class RequestBean {
+
+}

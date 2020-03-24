@@ -1,0 +1,21 @@
+package com.capgemini.librarymangemtsystemhibernate.service;
+
+import com.capgemini.librarymangemtsystemhibernate.dao.UsersDAO;
+import com.capgemini.librarymangemtsystemhibernate.dto.UsersBean;
+import com.capgemini.librarymangemtsystemhibernate.factory.UsersFactory;
+
+public class UsersServiceImp implements UsersService{
+	UsersDAO dao = UsersFactory.getUsersDAO();
+	@Override
+	public boolean register(UsersBean info) {
+		
+		return dao.register(info);
+	}
+
+	@Override
+	public UsersBean auth(UsersBean bean) {
+		
+		return dao.auth(bean);
+	}
+
+}

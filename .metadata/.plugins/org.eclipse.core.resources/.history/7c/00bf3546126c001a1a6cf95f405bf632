@@ -1,0 +1,16 @@
+package com.capgemini.librarymangemtsystemhibernate.dto;
+
+import java.util.Date;
+@Entity
+@Table(name = "Employee")
+public class UsersBean {
+	private int id;
+	private String name;
+	private long mobile;
+	private String email;
+	private String password;
+	private String role;
+	private Date issueDate;
+	private Date returnDate;
+	private int booksBorrowed;
+}
