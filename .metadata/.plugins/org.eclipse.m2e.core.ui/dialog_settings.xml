@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
+			<item value="C:\Users\srika\projects\librarymanagementsystemjdbc"/>
 			<item value="C:\Users\srika\projects\jdbclibrary\src\main\java\com\capgemini\librarymanagementjdbc\dummy\Dummy.java"/>
 			<item value="C:\Users\srika\projects\jdbclibrary"/>
 			<item value="C:\Users\srika\projects\librarymanagement\src\main\java\com\capgemini\librarymanagement\controller\AdminDummy.java"/>
@@ -31,6 +32,7 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
+			<item value="com.capgemini.librarymangemtsystemhibernate"/>
 			<item value="com.capgemini.librarjdbc"/>
 			<item value="com.capgemini.jdbc"/>
 			<item value="com.capgemini.lib"/>
@@ -43,6 +45,7 @@
 			<item value="com.capgemini"/>
 		</list>
 		<list key="artifactId">
+			<item value="librarymangemtsystemhibernate"/>
 			<item value="librarjdbc"/>
 			<item value="jdbc"/>
 			<item value="lib"/>
