@@ -11,40 +11,42 @@ import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.factory.AdminFactory;
 
 public class AdminServiceImp implements AdminService{
+	
 	private AdminDAO dao = AdminFactory.getAdminDAO();
+	
 	public boolean register(AdminBean info) {
 		return dao.register(info) ;
 	}
 
-	public AdminBean auth(String email, String password) {
-		return dao.auth(email, password);
+	public AdminBean login(String email, String password) {
+		return dao.login(email, password);
 	}
 	public boolean addBook(BookBean book) {
 
 		return dao.addBook(book);
 	}
 
-	public LinkedList<BookBean> searchBookTitle(String bTitle) {
+	public LinkedList<BookBean> searchBookByTitle(String bookTitle) {
 
-		return dao.searchBookTitle(bTitle);
+		return dao.searchBookByTitle(bookTitle);
 	}
 
-	public LinkedList<BookBean> searchBookAuthor(String bAuthor) {
+	public LinkedList<BookBean> searchBookByAuthor(String bookAuthor) {
 
-		return dao.searchBookAuthor(bAuthor);
+		return dao.searchBookByAuthor(bookAuthor);
 	}
 
-	public LinkedList<BookBean> searchBookType(String bookType) {
-		return dao.searchBookType(bookType);
+	public LinkedList<BookBean> searchBookByCategory(String bookCategory) {
+		return dao.searchBookByCategory(bookCategory);
 	}
 
-	public int updateBook(int bid) {
-		return dao.updateBook(bid);
+	public boolean updateBook(BookBean book) {
+		return dao.updateBook(book);
 	}
 
-	public boolean removeBook(int bid) {
+	public boolean removeBook(int bookId) {
 
-		return dao.removeBook(bid);
+		return dao.removeBook(bookId);
 	}
 
 	public LinkedList<Integer> getBookIds() {

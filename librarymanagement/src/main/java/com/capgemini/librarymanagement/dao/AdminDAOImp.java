@@ -9,6 +9,7 @@ import com.capgemini.librarymanagement.dto.BookBean;
 import com.capgemini.librarymanagement.dto.RequestBean;
 import com.capgemini.librarymanagement.dto.StudentBean;
 import com.capgemini.librarymanagement.exception.AdminException;
+import com.capgemini.librarymanagement.exception.BookException;
 
 public class AdminDAOImp implements AdminDAO {
 
@@ -23,7 +24,7 @@ public class AdminDAOImp implements AdminDAO {
 
 	}
 
-	public AdminBean auth(String email, String password) {
+	public AdminBean login(String email, String password) {
 		for(AdminBean bean : DataBase.admin) {
 			if(bean.getEmail().equals(email) && bean.getPassword().equals(password)) {
 				System.out.println("Login Successful");
@@ -56,13 +57,13 @@ public class AdminDAOImp implements AdminDAO {
 		return true;
 	}
 
-	public LinkedList<BookBean> searchBookTitle(String bname) {
+	public LinkedList<BookBean> searchBookByTitle(String bookName) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
-			String retrievedBname=retrievedBook.getName();
-			if(bname.equals(retrievedBname))
+			String retrievedBname=retrievedBook.getTitle();
+			if(bookName.equals(retrievedBname))
 			{
 				searchList.add(retrievedBook);	
 				return searchList;
@@ -79,14 +80,14 @@ public class AdminDAOImp implements AdminDAO {
 
 	}
 
-	public LinkedList<BookBean> searchBookAuthor(String bAuthor) {
+	public LinkedList<BookBean> searchBookByAuthor(String bookAuthor) {
 
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
 			String retrievedBAuthor=retrievedBook.getAuthor();
-			if(bAuthor.equals(retrievedBAuthor))
+			if(bookAuthor.equals(retrievedBAuthor))
 			{
 				searchList.add(retrievedBook);	
 				return searchList;
@@ -103,13 +104,13 @@ public class AdminDAOImp implements AdminDAO {
 
 	}
 
-	public LinkedList<BookBean> searchBookType(String bookType) {
+	public LinkedList<BookBean> searchBookByCategory(String bookCategory) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
 			String retrievedBookType=retrievedBook.getCategory();
-			if(bookType.equals(retrievedBookType))
+			if(bookCategory.equals(retrievedBookType))
 			{
 				searchList.add(retrievedBook);	
 			}
@@ -124,32 +125,36 @@ public class AdminDAOImp implements AdminDAO {
 		}			
 	}
 
-	public int updateBook(int bid) {
-		int status=0;
+	public boolean updateBook(BookBean book) {
+		
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
-			int retrievedId=retrievedBook.getId();
-			if(bid==retrievedId)
-			{
-				status++;
-				break;
+			if (retrievedBook.getId() == book.getId()) {
+				retrievedBook.setTitle(book.getTitle());
+				return true;
 			}
-		}
+			
+			else {
+				throw new BookException("Invalid Book");
+			}
+		} 
 		throw new AdminException("Book not updated");
 	}
 
-	public boolean removeBook(int bid) {
+	public boolean removeBook(int bookId) {
 		boolean status=false;
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
 			int retrievedId=retrievedBook.getId();
-			if(bid==retrievedId)
+			if(bookId==retrievedId)
 			{
 				status=true;
 				DataBase.book.remove(i);
 				break;
+			} else {
+				throw new BookException("Invalid BookId");
 			}
 		}
 		return status;
@@ -170,19 +175,7 @@ public class AdminDAOImp implements AdminDAO {
 	public LinkedList<BookBean> getBooksInfo() {
 		return DataBase.book;
 	}
-
-	public boolean issueBook(int bid) {
-		for(BookBean bean : DataBase.book) {
-			if(bean.getId()==bid) {
-				DataBase.book.remove(bid);
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false;
-	}
-
+	
 	public List<StudentBean> showUsers() {
 		List<StudentBean> usersList = new LinkedList<StudentBean>();
 		for (StudentBean studentBean : DataBase.student) {
@@ -219,32 +212,24 @@ public class AdminDAOImp implements AdminDAO {
 			if (info.getStudentInfo().getId() == student.getId()) {
 				if (info.getBookInfo().getId() == book.getId()) {
 					requestInfo = info;
-
 					isValid = true;
-
 				}
 			}
 		}
 
 		if (isValid)
-
 		{
-
-
 			for (BookBean info2 : DataBase.book) {
 				if (info2.getId() == book.getId()) {
 					book = info2;
 				}
-
 			}
 
 			for (StudentBean studentInfo : DataBase.student) {
 				if (studentInfo.getId() == student.getId()) {
 					student = studentInfo;
 					noOfBooksBorrowed = student.getBooksBorrowed();
-
 				}
-
 			}
 
 			if (noOfBooksBorrowed < 3) {
@@ -255,7 +240,6 @@ public class AdminDAOImp implements AdminDAO {
 					noOfBooksBorrowed++;
 					System.out.println(noOfBooksBorrowed);
 					student.setBooksBorrowed(noOfBooksBorrowed);
-					// DataBase.REQUESTDB.remove(requestInfo);
 					requestInfo.setIssued(true);
 					return true;
 				} else {
@@ -268,7 +252,6 @@ public class AdminDAOImp implements AdminDAO {
 
 		} else {
 			throw new AdminException("Book data or Student data is incorrect");
-
 		}
 	}
 
@@ -287,21 +270,20 @@ public class AdminDAOImp implements AdminDAO {
 		if (isValid) {
 
 			book.setAuthor(requestInfo1.getBookInfo().getAuthor());
-			book.setName(requestInfo1.getBookInfo().getName());
+			book.setTitle(requestInfo1.getBookInfo().getTitle());
 			DataBase.book.add(book);
 			DataBase.request.remove(requestInfo1);
-
 
 			for (StudentBean userInfo2 : DataBase.student) {
 				if (userInfo2.getId() == student.getId()) {
 					student = userInfo2;
 				}
-
 			}
 			int noOfBooksBorrowed = student.getBooksBorrowed();
 			noOfBooksBorrowed--;
 			student.setBooksBorrowed(noOfBooksBorrowed);
 			return true;
+
 		}
 
 		return false;

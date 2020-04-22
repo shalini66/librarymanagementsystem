@@ -30,13 +30,13 @@ public class StudentDAOImp implements StudentDAO {
 		throw new StudentException("Invalid email and password");
 
 	}
-	public LinkedList<BookBean> searchBookTitle(String bname) {
+	public LinkedList<BookBean> searchBookByTitle(String bookTitle) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
-			String retrievedBname=retrievedBook.getName();
-			if(bname.equals(retrievedBname))
+			String retrievedBname=retrievedBook.getTitle();
+			if(bookTitle.equals(retrievedBname))
 			{
 				searchList.add(retrievedBook);	
 				return searchList;	
@@ -53,13 +53,13 @@ public class StudentDAOImp implements StudentDAO {
 	}
 
 
-	public LinkedList<BookBean> searchBookAuthor(String bAuthor) {
+	public LinkedList<BookBean> searchBookByAuthor(String bookAuthor) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
 			String retrievedBAuthor=retrievedBook.getAuthor();
-			if(bAuthor.equals(retrievedBAuthor))
+			if(bookAuthor.equals(retrievedBAuthor))
 			{
 				searchList.add(retrievedBook);	
 			}
@@ -74,14 +74,13 @@ public class StudentDAOImp implements StudentDAO {
 		}	
 	}
 
-
-	public LinkedList<BookBean> searchBookType(int bookType) {
+	public LinkedList<BookBean> searchBookByCategory(String bookCategory) {
 		LinkedList<BookBean> searchList=new LinkedList<BookBean>();
 		for(int i=0;i<=DataBase.book.size()-1;i++)
 		{
 			BookBean retrievedBook=DataBase.book.get(i);
 			int retrievedBookType=retrievedBook.getId();
-			if(bookType==retrievedBookType)
+			if(bookCategory.equals(retrievedBookType))
 			{
 				searchList.add(retrievedBook);	
 			}
@@ -95,7 +94,6 @@ public class StudentDAOImp implements StudentDAO {
 			return searchList;
 		}	
 	}
-
 
 	public LinkedList<Integer> getBookIds() {
 		LinkedList<Integer> idList=new LinkedList<Integer>();

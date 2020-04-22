@@ -10,13 +10,13 @@ import com.capgemini.librarymanagement.dto.StudentBean;
 
 public interface AdminDAO {
 	boolean register(AdminBean info);
-	AdminBean auth(String email, String password);
+	AdminBean login(String email, String password);
 	boolean addBook(BookBean book);
-	LinkedList<BookBean> searchBookTitle(String bname);
-	LinkedList<BookBean> searchBookAuthor(String bAuthor);
-	LinkedList<BookBean> searchBookType(String bookType);
-	int updateBook(int bid);
-	boolean removeBook(int bid);
+	LinkedList<BookBean> searchBookByTitle(String bookName);
+	LinkedList<BookBean> searchBookByAuthor(String bookAuthor);
+	LinkedList<BookBean> searchBookByCategory(String bookCategory);
+	boolean updateBook(BookBean book);
+	boolean removeBook(int bookId);
 	LinkedList<Integer> getBookIds();
 	LinkedList<BookBean> getBooksInfo();
 	List<StudentBean> showUsers();

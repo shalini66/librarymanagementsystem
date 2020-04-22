@@ -6,6 +6,7 @@ import com.capgemini.librarymanagement.dto.AdminBean;
 import com.capgemini.librarymanagement.dto.BookBean;
 import com.capgemini.librarymanagement.dto.RequestBean;
 import com.capgemini.librarymanagement.dto.StudentBean;
+import com.capgemini.librarymanagement.dto.UserBean;
 
 public class DataBase {
 	public static final LinkedList<AdminBean> admin = new LinkedList<AdminBean>();

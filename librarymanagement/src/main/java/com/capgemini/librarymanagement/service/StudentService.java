@@ -10,9 +10,9 @@ import com.capgemini.librarymanagement.dto.StudentBean;
 public interface StudentService {
 	boolean register(StudentBean info);
 	StudentBean auth(String email, String password);
-	LinkedList<BookBean> searchBookTitle(String bname);
-	LinkedList<BookBean> searchBookAuthor(String bAuthor);
-	LinkedList<BookBean> searchBookType(int bookType);
+	LinkedList<BookBean> searchBookByTitle(String bookName);
+	LinkedList<BookBean> searchBookByAuthor(String bookAuthor);
+	LinkedList<BookBean> searchBookByCategory(String bookCategory);
 	LinkedList<Integer> getBookIds();
 	LinkedList<BookBean> getBooksInfo();
 	public RequestBean bookRequest(StudentBean student, BookBean book);

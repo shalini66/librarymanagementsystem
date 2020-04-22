@@ -19,16 +19,16 @@ public class StudentServiceImp implements StudentService {
 		return dao.auth(email, password);
 	}
 
-	public LinkedList<BookBean> searchBookTitle(String bname) {                                                         
-		return dao.searchBookTitle(bname);                                                                              
+	public LinkedList<BookBean> searchBookByTitle(String bookName) {                                                         
+		return dao.searchBookByTitle(bookName);                                                                              
 	}                                                                                                                   
                                                                                                                         
-	public LinkedList<BookBean> searchBookAuthor(String bAuthor) {                                                      
-		return dao.searchBookAuthor(bAuthor);                                                                           
+	public LinkedList<BookBean> searchBookByAuthor(String bookAuthor) {                                                      
+		return dao.searchBookByAuthor(bookAuthor);                                                                           
 	}                                                                                                                   
                                                                                                                         
-	public LinkedList<BookBean> searchBookType(int bookType) {                                                       
-		return dao.searchBookType(bookType);                                                                            
+	public LinkedList<BookBean> searchBookByCategory(String bookCategory) {                                                       
+		return dao.searchBookByCategory(bookCategory);                                                                            
 	}                                                                                                                   
                                                                                                                         
 	public LinkedList<Integer> getBookIds() {                                                                           

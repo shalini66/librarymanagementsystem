@@ -2,29 +2,25 @@ package com.capgemini.librarymanagement.dto;
 
 import java.io.Serializable;
 
-public class AdminBean implements Serializable{
-	private String aname;
-	private int aid;
+public class UserBean implements Serializable{
+	private String name;
+	private int id;
 	private long mobile;
 	private String email;
 	private String password;
-	public String getAname() {
-		return aname;
+	private String role;
+	
+	public int getId() {
+		return id;
 	}
-	public void setAname(String aname) {
-		this.aname = aname;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public long getMobile() {
 		return mobile;
 	}
 	public void setMobile(long mobile) {
 		this.mobile = mobile;
-	}
-	public int getAid() {
-		return aid;
-	}
-	public void setAid(int aid) {
-		this.aid = aid;
 	}
 	public String getEmail() {
 		return email;
@@ -37,6 +33,18 @@ public class AdminBean implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 }

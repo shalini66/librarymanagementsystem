@@ -28,6 +28,19 @@ public class ValidationAdminStudent {
 		}
 		return result;
 	}
+	
+	public boolean validatedRole(String role) throws ValidationException {
+		String roleRegEx = "^[A-Za-z\\\\s]{1,}[\\\\.]{0,1}[A-Za-z\\\\s]{0,}$" ;
+		boolean result = false;
+		Pattern pattern = Pattern.compile(roleRegEx);
+		Matcher matcher = pattern.matcher(role);
+		if (matcher.matches()) {
+			result = true;
+		} else {
+			throw new ValidationException("Role should  contains only admin/student");
+		}
+		return result;
+	}
 
 	public boolean validatedMobile(String mobile) throws ValidationException {
 		String mobileRegEx = "(0/91)?[6-9][0-9]{9}" ;
@@ -55,7 +68,7 @@ public class ValidationAdminStudent {
 	}
 
 	public boolean validatedPassword(String password) throws ValidationException {
-		String passwordRegEx = "((?=.[a-z])(?=.\\d)(?=.[A-Z])(?=.[@#$%!]).{8,40})" ;
+		String passwordRegEx = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})" ;
 		boolean result = false;
 		if (Pattern.matches(passwordRegEx, String.valueOf(password))) { 
 			result = true;
@@ -85,6 +98,39 @@ public class ValidationAdminStudent {
 			result = true;
 		} else {
 			throw new ValidationException("Id should contains exactly 4  digits");
+		}
+		return result;
+	}
+	
+	public  boolean validatedYear(int date) throws ValidationException {
+		String regex = "^\\d{4}$"; 
+		boolean result = false;
+		 
+		if(Pattern.matches(regex, String.valueOf(date))) {
+			result = true;
+		} else {
+			throw new ValidationException("Enter proper Date Format");
+		}
+		return result;
+	}
+	public boolean validatedISBN(long id) throws ValidationException {
+		String idRegEx = "[0-9]{10}";
+		boolean result = false;
+		if (Pattern.matches(idRegEx, String.valueOf(id))) {
+			result = true;
+		} else {
+			throw new ValidationException("Id should contains exactly 10 digits");
+		}
+		return result;
+	}
+	
+	public boolean validatedNum(int id) throws ValidationException {
+		String idRegEx = "[1-9]{1}" ;
+		boolean result = false;
+		if (Pattern.matches(idRegEx, String.valueOf(id))) {
+			result = true;
+		} else {
+			throw new ValidationException("Id should contains exactly 6 digits");
 		}
 		return result;
 	}
